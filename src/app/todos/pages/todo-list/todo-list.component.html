@@ -1,0 +1,47 @@
+<div class="container">
+  <mat-toolbar style="height: fit-content;">
+
+    <mat-form-field class="mr-3">
+      <input matInput placeholder="Description" #inputText>
+    </mat-form-field>
+
+
+
+    <mat-form-field  class="mr-3">
+      <mat-label>Priorities</mat-label>
+      <mat-select #matSelect>
+        <mat-option *ngFor="let priority of priorities" [value]="priority">
+          {{priority}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="filterTodos(inputText.value,matSelect.value)">Search</button>
+  </mat-toolbar>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef> Description </th>
+      <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="dueDate">
+      <th mat-header-cell *matHeaderCellDef> Due Date </th>
+      <td mat-cell *matCellDef="let element"> {{element.dueDate | date}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="priority">
+      <th mat-header-cell *matHeaderCellDef> Priority </th>
+      <td mat-cell *matCellDef="let element"> {{element.priority}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
